@@ -126,3 +126,5 @@ output
 trce: Timings.Console.Program[0]
       App is closing... completed in 0.0015ms
 ```
+
+**sample app:** [Timings.Console](https://github.com/ogulcanturan/Ogu.Extensions.Logging.Timings/blob/master/samples/Timings.Console/Program.cs)
