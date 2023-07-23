@@ -1,5 +1,9 @@
 # Ogu.Extensions.Logging.Timings
 
+[![.NET Core Desktop](https://github.com/ogulcanturan/Ogu.Extensions.Logging.Timings/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/ogulcanturan/Ogu.Extensions.Logging.Timings/actions/workflows/dotnet-desktop.yml)
+[![NuGet](https://img.shields.io/nuget/v/Ogu.Extensions.Logging.Timings.svg?color=1ecf18)](https://nuget.org/packages/Ogu.Extensions.Logging.Timings)
+[![Nuget](https://img.shields.io/nuget/dt/Ogu.Extensions.Logging.Timings.svg?logo=nuget)](https://nuget.org/packages/Ogu.Extensions.Logging.Timings)
+
 ## Introduction
 
 This library brings the feature-rich capabilities of [SerilogTimings](https://github.com/nblumhardt/serilog-timings/) to Microsoft.Extensions.Logging. Designed to seamlessly integrate with Microsoft.Extensions.Logging, this library enables developers to incorporate structured timing measurements into their log entries, enhancing the logging experience and providing valuable performance insights. If you are already familiar with [SerilogTimings](https://github.com/nblumhardt/serilog-timings/), you'll find it easy to use this library as it maintains the same ease of use and flexibility while targeting Microsoft.Extensions.Logging.
@@ -122,3 +126,5 @@ output
 trce: Timings.Console.Program[0]
       App is closing... completed in 0.0015ms
 ```
+
+**sample app:** [Timings.Console](https://github.com/ogulcanturan/Ogu.Extensions.Logging.Timings/blob/master/samples/Timings.Console/Program.cs)
