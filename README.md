@@ -6,7 +6,7 @@
 
 ## Introduction
 
-This library brings the feature-rich capabilities of [SerilogTimings](https://github.com/nblumhardt/serilog-timings/) to Microsoft.Extensions.Logging. Designed to seamlessly integrate with Microsoft.Extensions.Logging, this library enables developers to incorporate structured timing measurements into their log entries, enhancing the logging experience and providing valuable performance insights. If you are already familiar with [SerilogTimings](https://github.com/nblumhardt/serilog-timings/), you'll find it easy to use this library as it maintains the same ease of use and flexibility while targeting Microsoft.Extensions.Logging.
+This library brings the feature-rich capabilities of [SerilogTimings](https://github.com/nblumhardt/serilog-timings/) to `Microsoft.Extensions.Logging`. Designed to seamlessly integrate with `Microsoft.Extensions.Logging`, this library enables developers to incorporate structured timing measurements into their log entries, enhancing the logging experience and providing valuable performance insights. If you are already familiar with [SerilogTimings](https://github.com/nblumhardt/serilog-timings/), you'll find it easy to use this library as it maintains the same ease of use and flexibility while targeting Microsoft.Extensions.Logging.
 
 
 ## Features
