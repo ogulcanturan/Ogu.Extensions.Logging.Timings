@@ -59,9 +59,7 @@ namespace Ogu.Extensions.Logging.Timings
                 var elapsedTicks = stop - _start;
 
                 if (elapsedTicks < 0)
-                {
                     return TimeSpan.Zero;
-                }
 
                 return TimeSpan.FromTicks(elapsedTicks);
             }
@@ -75,6 +73,14 @@ namespace Ogu.Extensions.Logging.Timings
             Write(_target, _completionLevel, OutcomeCompleted);
         }
 
+        public void Complete(LogLevel level)
+        {
+            if (_completionBehaviour == CompletionBehaviour.Silent)
+                return;
+
+            Write(_target, level, OutcomeCompleted);
+        }
+
         public void Complete(string resultPropertyName, object result)
         {
             if (resultPropertyName == null)
@@ -86,6 +92,19 @@ namespace Ogu.Extensions.Logging.Timings
             _disposables.Add(_target.BeginScope(new Dictionary<string, object> { { resultPropertyName, result } }));
 
             Write(_target, _completionLevel, OutcomeCompleted);
+        }
+
+        public void Complete(string resultPropertyName, object result, LogLevel level)
+        {
+            if (resultPropertyName == null)
+                throw new ArgumentNullException(nameof(resultPropertyName));
+
+            if (_completionBehaviour == CompletionBehaviour.Silent)
+                return;
+
+            _disposables.Add(_target.BeginScope(new Dictionary<string, object> { { resultPropertyName, result } }));
+
+            Write(_target, level, OutcomeCompleted);
         }
 
         public void Abandon()
@@ -104,7 +123,6 @@ namespace Ogu.Extensions.Logging.Timings
 
         public void Dispose()
         {
-
             switch (_completionBehaviour)
             {
                 case CompletionBehaviour.Silent:

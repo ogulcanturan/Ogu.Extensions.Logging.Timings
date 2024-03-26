@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 
 namespace Ogu.Extensions.Logging.Timings
@@ -27,7 +28,7 @@ namespace Ogu.Extensions.Logging.Timings
 
         internal static LevelledOperation None { get; } = new LevelledOperation(
             new Operation(
-                new LoggerFactory().CreateLogger(""),
+                NullLogger.Instance,
                 "", Array.Empty<object>(),
                 CompletionBehaviour.Silent,
                 LogLevel.Critical,
