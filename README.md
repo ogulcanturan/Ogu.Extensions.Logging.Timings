@@ -1,4 +1,4 @@
-# Ogu.Extensions.Logging.Timings
+# <img src="logo/ogu-logo.png" alt="Header" width="24"/> Ogu.Extensions.Logging.Timings
 
 [![.NET Core Desktop](https://github.com/ogulcanturan/Ogu.Extensions.Logging.Timings/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/ogulcanturan/Ogu.Extensions.Logging.Timings/actions/workflows/dotnet-desktop.yml)
 [![NuGet](https://img.shields.io/nuget/v/Ogu.Extensions.Logging.Timings.svg?color=1ecf18)](https://nuget.org/packages/Ogu.Extensions.Logging.Timings)
