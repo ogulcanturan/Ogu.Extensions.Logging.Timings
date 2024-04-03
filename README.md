@@ -128,4 +128,4 @@ trce: Timings.Console.Program[0]
 ```
 
 ## Sample Application
-A sample application demonstrating the usage of Ogu.Dal.MongoDb can be found [here](https://github.com/ogulcanturan/Ogu.Extensions.Logging.Timings/blob/master/samples/Timings.Console/).
+A sample application demonstrating the usage of Ogu.Extensions.Logging.Timings can be found [here](https://github.com/ogulcanturan/Ogu.Extensions.Logging.Timings/blob/master/samples/Timings.Console/).
