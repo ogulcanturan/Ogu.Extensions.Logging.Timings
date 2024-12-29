@@ -1,6 +1,6 @@
 ﻿namespace Ogu.Extensions.Logging.Timings
 {
-    enum CompletionBehaviour
+    internal enum CompletionBehaviour
     {
         Abandon,
         Complete,

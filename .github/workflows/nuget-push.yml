@@ -1,0 +1,47 @@
+name: NuGet Push
+run-name: NuGet Push - ${{ github.event.inputs.project_name }} v${{ github.event.inputs.version_number }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_name:
+        description: 'Name of the project'
+        required: true
+        type: choice
+        options: ['Ogu.Extensions.Logging.Timings']
+      version_number:
+        description: 'Version number of the package'
+        required: true
+        default: '1.0.0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate version number format
+        run: |
+          if [[ ! "${{ github.event.inputs.version_number }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-preview\.[0-9]+\.[0-9]+\.[0-9]+)?$ ]]; then
+            echo "Invalid version number format. Version number should be in the format '[0-9].[0-9].[0-9]' or '[0-9].[0-9].[0-9]-preview.[0-9].[0-9].[0-9]'."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+
+      - name: Build Project
+        run: dotnet build --configuration Release src/${{ github.event.inputs.project_name }}/${{ github.event.inputs.project_name }}.csproj
+
+      - name: Create Release
+        run: gh release create ${{ github.ref_name }} --title "Release ${{ github.ref_name }}" --notes "" --draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Pack NuGet package
+        run: dotnet pack --configuration Release --output nupkgs src/${{ github.event.inputs.project_name }}/${{ github.event.inputs.project_name }}.csproj /p:PackageVersion=${{ github.event.inputs.version_number }}
+
+      - name: Push NuGet package
+        run: dotnet nuget push nupkgs/${{ github.event.inputs.project_name }}.${{ github.event.inputs.version_number }}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}

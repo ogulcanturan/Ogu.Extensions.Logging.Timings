@@ -78,13 +78,13 @@ namespace Timings.Console
 
             #endregion
 
+            #region Usage 5
+
             System.Console.WriteLine("Press something to close app");
             System.Console.ReadKey();
             System.Console.WriteLine();
 
-            #region Usage 5
-
-            using (logger.OperationAt(LogLevel.Trace).Time("App is closing..."))
+            using (logger.OperationAt(LogLevel.Trace).Time("App is closing...", null))
             {
                 // Do some operations
             }

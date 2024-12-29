@@ -6,14 +6,33 @@ using System.Linq;
 
 namespace Ogu.Extensions.Logging.Timings
 {
+    /// <summary>
+    ///     Represents an operation that is tracked for logging purposes. 
+    ///     It logs the start and completion of tasks along with their duration.
+    ///     The operation can be <c>completed</c>, <c>abandoned</c>, or <c>cancelled</c>, and supports enriching the log context with additional properties.
+    /// </summary>
     public class Operation : IDisposable
     {
+        /// <summary>
+        ///     Specifies the properties that can be included in the log for an operation.
+        /// </summary>
         public enum Properties
         {
+            /// <summary>
+            ///     The elapsed time of the operation in milliseconds.
+            /// </summary>
             Elapsed,
+
+            /// <summary>
+            ///     The outcome of the operation (e.g., completed or abandoned).
+            /// </summary>
             Outcome,
+
+            /// <summary>
+            ///     The unique identifier associated with the operation, added to the log context.
+            /// </summary>
             OperationId
-        };
+        }
 
         private const string OutcomeCompleted = "completed", OutcomeAbandoned = "abandoned";
         private static readonly double StopwatchToTimeSpanTicks = (double)Stopwatch.Frequency / TimeSpan.TicksPerSecond;
@@ -51,6 +70,10 @@ namespace Ogu.Extensions.Logging.Timings
             return unchecked((long)(Stopwatch.GetTimestamp() / StopwatchToTimeSpanTicks));
         }
 
+        /// <summary>
+        ///     Gets the elapsed time of the operation.
+        ///     Returns the time span since the operation started, or zero if the operation has not yet been completed.
+        /// </summary>
         public TimeSpan Elapsed
         {
             get
@@ -58,55 +81,82 @@ namespace Ogu.Extensions.Logging.Timings
                 var stop = _stop ?? GetTimestamp();
                 var elapsedTicks = stop - _start;
 
-                if (elapsedTicks < 0)
-                    return TimeSpan.Zero;
-
-                return TimeSpan.FromTicks(elapsedTicks);
+                return elapsedTicks < 0 ? TimeSpan.Zero : TimeSpan.FromTicks(elapsedTicks);
             }
         }
 
+        /// <summary>
+        ///     Marks the timed operation as completed and logs the outcome with the default log level.
+        /// </summary>
         public void Complete()
         {
             if (_completionBehaviour == CompletionBehaviour.Silent)
+            {
                 return;
+            }
 
             Write(_target, _completionLevel, OutcomeCompleted);
         }
 
+        /// <summary>
+        ///     Marks the timed operation as completed and logs the outcome with the specified log level.
+        /// </summary>
+        /// <param name="level">The log level to use for logging the completion outcome.</param>
         public void Complete(LogLevel level)
         {
             if (_completionBehaviour == CompletionBehaviour.Silent)
+            {
                 return;
+            }
 
             Write(_target, level, OutcomeCompleted);
         }
 
-        public void Complete(string resultPropertyName, object result)
+        /// <summary>
+        ///     Marks the timed operation as completed and logs the outcome with an additional property.
+        /// </summary>
+        /// <param name="propertyName">The name of the result property.</param>
+        /// <param name="value">The value of the result property.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="propertyName"/> is null.</exception>
+        public void Complete(string propertyName, object value)
         {
-            if (resultPropertyName == null)
-                throw new ArgumentNullException(nameof(resultPropertyName));
+            if (propertyName == null)
+            {
+                throw new ArgumentNullException(nameof(propertyName));
+            }
 
             if (_completionBehaviour == CompletionBehaviour.Silent)
+            {
                 return;
+            }
 
-            _disposables.Add(_target.BeginScope(new Dictionary<string, object> { { resultPropertyName, result } }));
+            _disposables.Add(_target.BeginScope(new Dictionary<string, object> { { propertyName, value } }));
 
             Write(_target, _completionLevel, OutcomeCompleted);
         }
 
-        public void Complete(string resultPropertyName, object result, LogLevel level)
+        /// <summary>
+        ///     Marks the timed operation as completed and logs the outcome with an additional property and a specified log level.
+        /// </summary>
+        /// <param name="propertyName">The name of the result property.</param>
+        /// <param name="value">The value of the result property.</param>
+        /// <param name="level">The log level to use for logging the completion outcome.</param>
+        public void Complete(string propertyName, object value, LogLevel level)
         {
-            if (resultPropertyName == null)
-                throw new ArgumentNullException(nameof(resultPropertyName));
+            if (propertyName == null)
+                throw new ArgumentNullException(nameof(propertyName));
 
             if (_completionBehaviour == CompletionBehaviour.Silent)
                 return;
 
-            _disposables.Add(_target.BeginScope(new Dictionary<string, object> { { resultPropertyName, result } }));
+            _disposables.Add(_target.BeginScope(new Dictionary<string, object> { { propertyName, value } }));
 
             Write(_target, level, OutcomeCompleted);
         }
 
+        /// <summary>
+        ///     Marks the timed operation as abandoned and logs the abandonment outcome.
+        /// </summary>
         public void Abandon()
         {
             if (_completionBehaviour == CompletionBehaviour.Silent)
@@ -115,12 +165,18 @@ namespace Ogu.Extensions.Logging.Timings
             Write(_target, _abandonmentLevel, OutcomeAbandoned);
         }
 
+        /// <summary>
+        ///     Cancels the timed operation, suppressing any further logging. The operation will not be completed or abandoned.
+        /// </summary>
         public void Cancel()
         {
             _completionBehaviour = CompletionBehaviour.Silent;
             DisposeContext();
         }
 
+        /// <summary>
+        ///     Disposes of the timed operation, logging the outcome based on the completion behavior (complete or abandon).
+        /// </summary>
         public void Dispose()
         {
             switch (_completionBehaviour)
@@ -166,20 +222,41 @@ namespace Ogu.Extensions.Logging.Timings
             DisposeContext();
         }
 
+        /// <summary>
+        ///     Enriches the timed operation with additional properties in the log context.
+        /// </summary>
+        /// <param name="enrichers">The properties to add to the log context.</param>
+        /// <returns>The current operation instance for method chaining.</returns>
         public Operation EnrichWith(params KeyValuePair<string, object>[] enrichers)
         {
             _disposables.Add(_target.BeginScope(enrichers));
             return this;
         }
 
+        /// <summary>
+        ///     Enriches the timed operation with additional properties in the log context.
+        /// </summary>
+        /// <param name="enrichers">The properties to add to the log context.</param>
+        /// <returns>The current operation instance for method chaining.</returns>
         public Operation EnrichWith(IEnumerable<KeyValuePair<string, object>> enrichers)
         {
             _disposables.Add(_target.BeginScope(enrichers));
             return this;
         }
 
+        /// <summary>
+        ///     Enriches the timed operation with a single additional property in the log context.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to add to the log context.</param>
+        /// <param name="value">The value of the property.</param>
+        /// <returns>The current operation instance for method chaining.</returns>
         public Operation EnrichWith(string propertyName, object value) => EnrichWith(new KeyValuePair<string, object>(propertyName, value));
 
+        /// <summary>
+        ///     Sets an exception to be logged for the timed operation.
+        /// </summary>
+        /// <param name="exception">The exception associated with the operation.</param>
+        /// <returns>The current operation instance for method chaining.</returns>
         public Operation SetException(Exception exception)
         {
             _exception = exception;
