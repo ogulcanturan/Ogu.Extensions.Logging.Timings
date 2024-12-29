@@ -7,7 +7,7 @@ namespace Ogu.Extensions.Logging.Timings
     /// <summary>
     ///     Represents an operation with specified log levels for completion and abandonment.
     ///     Supports time-based operations with optional warning thresholds. If the operation exceeds the 
-    ///     warning threshold, the log level may be upgraded to <see cref="LogLevel.Warning"/>.
+    ///     warning threshold, the log level may be upgraded to <see cref="Microsoft.Extensions.Logging.LogLevel.Warning"/>.
     /// </summary>
     public class LevelledOperation
     {
