@@ -4,13 +4,13 @@ using System;
 namespace Ogu.Extensions.Logging.Timings
 {
     /// <summary>
-    ///     Provides extension methods for <see cref="ILogger"/> to simplify the creation and logging of timed operations.
+    /// Provides extension methods for <see cref="ILogger"/> to simplify the creation and logging of timed operations.
     /// </summary>
     public static class LoggerOperationExtensions
     {
         /// <summary>
-        ///     Starts a timed operation and logs the time taken for the operation to complete. 
-        ///     The operation is completed automatically with an <see cref="Operation"/>.
+        /// Starts a timed operation and logs the time taken for the operation to complete. 
+        /// The operation is completed automatically with an <see cref="Operation"/>.
         /// </summary>
         /// <param name="logger">The logger instance used to log the operation.</param>
         /// <param name="messageTemplate">The message template for the log entry.</param>
@@ -22,7 +22,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Begins a new timed operation and logs its start. The operation will be marked as abandoned if not completed.
+        /// Begins a new timed operation and logs its start. The operation will be marked as abandoned if not completed.
         /// </summary>
         /// <param name="logger">The logger instance used to log the operation.</param>
         /// <param name="messageTemplate">The message template for the log entry.</param>
@@ -34,7 +34,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Starts a timed operation with specified completion and abandonment log levels, and optional warning threshold.
+        /// Starts a timed operation with specified completion and abandonment log levels, and optional warning threshold.
         /// </summary>
         /// <param name="logger">The logger instance used to log the operation.</param>
         /// <param name="completion">The log level for the operation's completion message.</param>

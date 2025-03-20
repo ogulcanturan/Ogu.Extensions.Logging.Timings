@@ -5,9 +5,9 @@ using System;
 namespace Ogu.Extensions.Logging.Timings
 {
     /// <summary>
-    ///     Represents an operation with specified log levels for completion and abandonment.
-    ///     Supports time-based operations with optional warning thresholds. If the operation exceeds the 
-    ///     warning threshold, the log level may be upgraded to <see cref="Microsoft.Extensions.Logging.LogLevel.Warning"/>.
+    /// Represents an operation with specified log levels for completion and abandonment.
+    /// Supports time-based operations with optional warning thresholds. If the operation exceeds the 
+    /// warning threshold, the log level may be upgraded to <see cref="Microsoft.Extensions.Logging.LogLevel.Warning"/>.
     /// </summary>
     public class LevelledOperation
     {
@@ -34,15 +34,15 @@ namespace Ogu.Extensions.Logging.Timings
         internal static LevelledOperation None { get; } = new LevelledOperation(
             new Operation(
                 NullLogger.Instance,
-                "", Array.Empty<object>(),
+                string.Empty, Array.Empty<object>(),
                 CompletionBehaviour.Silent,
                 LogLevel.Critical,
                 LogLevel.Critical));
 
         /// <summary>
-        ///     Begins a new timed operation with the specified message template and arguments. 
-        ///     The operation will be marked as abandoned if not completed. If the operation exceeds the 
-        ///     warning threshold, the log level may be upgraded to <see cref="LogLevel.Warning"/> if it's below that level.
+        /// Begins a new timed operation with the specified message template and arguments. 
+        /// The operation will be marked as abandoned if not completed. If the operation exceeds the 
+        /// warning threshold, the log level may be upgraded to <see cref="LogLevel.Warning"/> if it's below that level.
         /// </summary>
         /// <param name="messageTemplate">The message template for the log entry.</param>
         /// <param name="args">Arguments to format the message template.</param>
@@ -54,9 +54,9 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Begins a timed operation that logs the completion time when disposed.
-        ///     If the operation exceeds the warning threshold, the log level may be upgraded to 
-        ///     <see cref="LogLevel.Warning"/> if the current log level is lower.
+        /// Begins a timed operation that logs the completion time when disposed.
+        /// If the operation exceeds the warning threshold, the log level may be upgraded to 
+        /// <see cref="LogLevel.Warning"/> if the current log level is lower.
         /// </summary>
         /// <param name="messageTemplate">The message template for the log entry.</param>
         /// <param name="args">Arguments to format the message template.</param>

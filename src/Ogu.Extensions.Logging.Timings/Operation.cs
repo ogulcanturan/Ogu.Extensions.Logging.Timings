@@ -7,29 +7,29 @@ using System.Linq;
 namespace Ogu.Extensions.Logging.Timings
 {
     /// <summary>
-    ///     Represents an operation that is tracked for logging purposes. 
-    ///     It logs the start and completion of tasks along with their duration.
-    ///     The operation can be <c>completed</c>, <c>abandoned</c>, or <c>cancelled</c>, and supports enriching the log context with additional properties.
+    /// Represents an operation that is tracked for logging purposes. 
+    /// It logs the start and completion of tasks along with their duration.
+    /// The operation can be <c>completed</c>, <c>abandoned</c>, or <c>cancelled</c>, and supports enriching the log context with additional properties.
     /// </summary>
     public class Operation : IDisposable
     {
         /// <summary>
-        ///     Specifies the properties that can be included in the log for an operation.
+        /// Specifies the properties that can be included in the log for an operation.
         /// </summary>
         public enum Properties
         {
             /// <summary>
-            ///     The elapsed time of the operation in milliseconds.
+            /// The elapsed time of the operation in milliseconds.
             /// </summary>
             Elapsed,
 
             /// <summary>
-            ///     The outcome of the operation (e.g., completed or abandoned).
+            /// The outcome of the operation (e.g., completed or abandoned).
             /// </summary>
             Outcome,
 
             /// <summary>
-            ///     The unique identifier associated with the operation, added to the log context.
+            /// The unique identifier associated with the operation, added to the log context.
             /// </summary>
             OperationId
         }
@@ -71,8 +71,8 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Gets the elapsed time of the operation.
-        ///     Returns the time span since the operation started, or zero if the operation has not yet been completed.
+        /// Gets the elapsed time of the operation.
+        /// Returns the time span since the operation started, or zero if the operation has not yet been completed.
         /// </summary>
         public TimeSpan Elapsed
         {
@@ -86,7 +86,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Marks the timed operation as completed and logs the outcome with the default log level.
+        /// Marks the timed operation as completed and logs the outcome with the default log level.
         /// </summary>
         public void Complete()
         {
@@ -99,7 +99,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Marks the timed operation as completed and logs the outcome with the specified log level.
+        /// Marks the timed operation as completed and logs the outcome with the specified log level.
         /// </summary>
         /// <param name="level">The log level to use for logging the completion outcome.</param>
         public void Complete(LogLevel level)
@@ -113,7 +113,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Marks the timed operation as completed and logs the outcome with an additional property.
+        /// Marks the timed operation as completed and logs the outcome with an additional property.
         /// </summary>
         /// <param name="propertyName">The name of the result property.</param>
         /// <param name="value">The value of the result property.</param>
@@ -136,7 +136,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Marks the timed operation as completed and logs the outcome with an additional property and a specified log level.
+        /// Marks the timed operation as completed and logs the outcome with an additional property and a specified log level.
         /// </summary>
         /// <param name="propertyName">The name of the result property.</param>
         /// <param name="value">The value of the result property.</param>
@@ -155,7 +155,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Marks the timed operation as abandoned and logs the abandonment outcome.
+        /// Marks the timed operation as abandoned and logs the abandonment outcome.
         /// </summary>
         public void Abandon()
         {
@@ -166,7 +166,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Cancels the timed operation, suppressing any further logging. The operation will not be completed or abandoned.
+        /// Cancels the timed operation, suppressing any further logging. The operation will not be completed or abandoned.
         /// </summary>
         public void Cancel()
         {
@@ -175,7 +175,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Disposes of the timed operation, logging the outcome based on the completion behavior (complete or abandon).
+        /// Disposes of the timed operation, logging the outcome based on the completion behavior (complete or abandon).
         /// </summary>
         public void Dispose()
         {
@@ -223,7 +223,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Enriches the timed operation with additional properties in the log context.
+        /// Enriches the timed operation with additional properties in the log context.
         /// </summary>
         /// <param name="enrichers">The properties to add to the log context.</param>
         /// <returns>The current operation instance for method chaining.</returns>
@@ -234,7 +234,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Enriches the timed operation with additional properties in the log context.
+        /// Enriches the timed operation with additional properties in the log context.
         /// </summary>
         /// <param name="enrichers">The properties to add to the log context.</param>
         /// <returns>The current operation instance for method chaining.</returns>
@@ -245,7 +245,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Enriches the timed operation with a single additional property in the log context.
+        /// Enriches the timed operation with a single additional property in the log context.
         /// </summary>
         /// <param name="propertyName">The name of the property to add to the log context.</param>
         /// <param name="value">The value of the property.</param>
@@ -253,7 +253,7 @@ namespace Ogu.Extensions.Logging.Timings
         public Operation EnrichWith(string propertyName, object value) => EnrichWith(new KeyValuePair<string, object>(propertyName, value));
 
         /// <summary>
-        ///     Sets an exception to be logged for the timed operation.
+        /// Sets an exception to be logged for the timed operation.
         /// </summary>
         /// <param name="exception">The exception associated with the operation.</param>
         /// <returns>The current operation instance for method chaining.</returns>

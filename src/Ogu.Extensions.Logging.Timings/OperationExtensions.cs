@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace Ogu.Extensions.Logging.Timings
 {
     /// <summary>
-    ///     Provides extension methods for the <see cref="Operation"/> class to simplify logging and handling of task outcomes.
+    /// Provides extension methods for the <see cref="Operation"/> class to simplify logging and handling of task outcomes.
     /// </summary>
     public static class OperationExtensions
     {
         /// <summary>
-        ///     Enriches the resulting log event with the provided exception and skips the exception-handling block, 
-        ///     allowing the exception to be rethrown.
+        /// Enriches the resulting log event with the provided exception and skips the exception-handling block, 
+        /// allowing the exception to be rethrown.
         /// </summary>
         /// <param name="operation">The operation to enrich with the exception.</param>
         /// <param name="exception">The exception related to the event.</param>
@@ -39,7 +39,7 @@ namespace Ogu.Extensions.Logging.Timings
         }
 
         /// <summary>
-        ///     Completes the timed operation and enriches the log context with a key-value pair before completion.
+        /// Completes the timed operation and enriches the log context with a key-value pair before completion.
         /// </summary>
         /// <param name="operation">The operation instance to complete.</param>
         /// <param name="enricher">A key-value pair to add to the log context.</param>
@@ -57,7 +57,7 @@ namespace Ogu.Extensions.Logging.Timings
             => operation.EnrichWith(enricher).Complete();
 
         /// <summary>
-        ///     Completes the timed operation and enriches the log context with a collection of key-value pairs before completion.
+        /// Completes the timed operation and enriches the log context with a collection of key-value pairs before completion.
         /// </summary>
         /// <param name="operation">The operation instance to complete.</param>
         /// <param name="enrichers">A collection of key-value pairs to add to the log context.</param>
@@ -65,7 +65,7 @@ namespace Ogu.Extensions.Logging.Timings
             => operation.EnrichWith(enrichers).Complete();
 
         /// <summary>
-        ///     Abandons the timed operation and enriches the log context with the result property before abandonment.
+        /// Abandons the timed operation and enriches the log context with the result property before abandonment.
         /// </summary>
         /// <param name="operation">The operation instance to abandon.</param>
         /// <param name="propertyName">The name of the result property to add to the log context.</param>
@@ -84,7 +84,7 @@ namespace Ogu.Extensions.Logging.Timings
             => operation.EnrichWith(propertyName, value).Abandon();
 
         /// <summary>
-        ///     Abandons the timed operation and enriches the log context with a key-value pair before abandonment.
+        /// Abandons the timed operation and enriches the log context with a key-value pair before abandonment.
         /// </summary>
         /// <param name="operation">The operation instance to abandon.</param>
         /// <param name="enricher">A key-value pair to add to the log context before abandonment.</param>
@@ -102,7 +102,7 @@ namespace Ogu.Extensions.Logging.Timings
             => operation.EnrichWith(enricher).Abandon();
 
         /// <summary>
-        ///     Abandons the operation and enriches the log context with a collection of key-value pairs before abandonment.
+        /// Abandons the operation and enriches the log context with a collection of key-value pairs before abandonment.
         /// </summary>
         /// <param name="operation">The operation instance to abandon.</param>
         /// <param name="enrichers">A collection of key-value pairs to add to the log context before abandonment.</param>
@@ -110,7 +110,7 @@ namespace Ogu.Extensions.Logging.Timings
             => operation.EnrichWith(enrichers).Abandon();
 
         /// <summary>
-        ///     Abandons the timed operation with an included exception.
+        /// Abandons the timed operation with an included exception.
         /// </summary>
         /// <param name="operation">The operation instance to abandon.</param>
         /// <param name="exception">The exception to set for the operation before abandonment.</param>
